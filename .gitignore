@@ -141,3 +141,16 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# env files 
+   .env
+   .env.local
+   .env*.local
+
+   # OS/editor cruft
+   .DS_Store
+   .vscode/
+   .idea/
+
+   # testing/coverage
+   coverage/
