@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Instrument_Serif } from 'next/font/google';
 import localFont from 'next/font/local';
+import { ThemeScript } from '@/components/theme-script';
 import './globals.css';
 
 const switzer = localFont({
@@ -45,8 +46,14 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${switzer.variable} ${instrumentSerif.variable}`}
+      suppressHydrationWarning
     >
-      <body>{children}</body>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="bg-surface-light dark:bg-surface-dark text-ink dark:text-mint transition-colors">
+        {children}
+      </body>
     </html>
   );
 }
