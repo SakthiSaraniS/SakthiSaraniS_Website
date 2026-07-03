@@ -1,67 +1,99 @@
+'use client';
+
 import { ThemeToggle } from '@/components/theme-toggle';
-import Image from 'next/image';
+import { useReveal } from '@/lib/hooks/use-reveal';
+import { useParallax } from '@/lib/hooks/use-parallax';
+import { useCountUp } from '@/lib/hooks/use-count-up';
 
 export default function Home() {
+  const heroRef = useReveal<HTMLDivElement>(100);
+  const card1Ref = useReveal<HTMLDivElement>(100);
+  const card2Ref = useReveal<HTMLDivElement>(250);
+  const card3Ref = useReveal<HTMLDivElement>(400);
+  const parallaxRef = useParallax<HTMLDivElement>(0.2);
+  const { ref: statRef, value: statValue } =
+    useCountUp<HTMLParagraphElement>(87);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <ThemeToggle />
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-surface-light dark:bg-surface-dark text-ink dark:text-mint transition-colors">
+      {/* Nav placeholder with toggle */}
+      <div className="fixed top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
+
+      {/* Hero section */}
+      <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+        <div ref={heroRef} className="reveal max-w-2xl">
+          <p className="mb-4 text-sm font-medium uppercase tracking-widest text-moss">
+            Design system test
+          </p>
+          <h1 className="text-5xl font-semibold leading-tight sm:text-7xl">
+            Building systems <span className="italic-accent">that scale</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{' '}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{' '}
-            or the{' '}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{' '}
-            center.
+          <p className="mt-6 text-lg text-ink/60 dark:text-mint/60">
+            Scroll down to test Lenis smooth scroll and staggered reveal
+            animations.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Squircle token test cards — scroll distance forces real reveal testing */}
+      <section className="flex min-h-screen flex-col items-center justify-center gap-6 px-6">
+        <div
+          ref={card1Ref}
+          className="reveal squircle w-full max-w-md bg-forest/10 dark:bg-forest/20 p-8"
+        >
+          <h2 className="text-2xl font-medium text-moss">Card One</h2>
+          <p className="mt-2 text-ink/70 dark:text-mint/70">
+            Testing squircle corners, forest tint background, and reveal delay
+            0ms.
+          </p>
         </div>
-      </main>
+        <div
+          ref={card2Ref}
+          className="reveal squircle w-full max-w-md bg-moss/10 dark:bg-moss/20 p-8"
+        >
+          <h2 className="text-2xl font-medium text-moss">Card Two</h2>
+          <p className="mt-2 text-ink/70 dark:text-mint/70">
+            Reveal delay 100ms — should visibly stagger after Card One.
+          </p>
+        </div>
+        <div
+          ref={card3Ref}
+          className="reveal squircle-lg w-full max-w-md bg-mint/20 dark:bg-mint/10 p-8"
+        >
+          <h2 className="text-2xl font-medium text-moss">Card Three</h2>
+          <p className="mt-2 text-ink/70 dark:text-mint/70">
+            Reveal delay 200ms, larger squircle-lg radius variant.
+          </p>
+        </div>
+      </section>
+
+      {/* Parallax + bottom spacer — real scroll distance to feel Lenis easing */}
+      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+        <div
+          ref={parallaxRef}
+          className="pointer-events-none absolute select-none text-9xl text-moss opacity-10"
+          aria-hidden="true"
+        >
+          ✦
+        </div>
+
+        <div className="relative">
+          <p ref={statRef} className="text-6xl font-semibold text-moss">
+            {statValue}%
+          </p>
+          <p className="mt-2 text-sm uppercase tracking-widest text-ink/50 dark:text-mint/50">
+            Test coverage
+          </p>
+        </div>
+
+        <p className="relative mt-8 text-ink/40 dark:text-mint/40">
+          End of test page. Scroll back up to confirm reveal doesn&apos;t
+          re-trigger, and watch the ✦ above drift at a different speed than this
+          text.
+        </p>
+      </section>
     </div>
   );
 }

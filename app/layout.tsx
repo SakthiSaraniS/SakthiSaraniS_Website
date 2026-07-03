@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Instrument_Serif } from 'next/font/google';
 import localFont from 'next/font/local';
 import { ThemeScript } from '@/components/theme-script';
+import { SmoothScroll } from '@/components/smooth-scroll';
 import './globals.css';
 
 const switzer = localFont({
@@ -52,7 +53,7 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body className="bg-surface-light dark:bg-surface-dark text-ink dark:text-mint transition-colors">
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
