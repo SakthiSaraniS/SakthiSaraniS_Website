@@ -16,11 +16,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-surface-light dark:bg-surface-dark text-ink dark:text-mint transition-colors">
-      {/* Nav placeholder with toggle */}
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
-      </div>
-
       {/* Hero section */}
       <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <div ref={heroRef} className="reveal max-w-2xl">
