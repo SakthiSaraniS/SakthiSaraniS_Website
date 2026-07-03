@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-export function useCountUp(target: number, duration: number = 1100) {
-  const ref = useRef<HTMLElement | null>(null);
+export function useCountUp<T extends HTMLElement>(
+  target: number,
+  duration: number = 1100
+) {
+  const ref = useRef<T | null>(null);
   const [value, setValue] = useState(0);
 
   useEffect(() => {

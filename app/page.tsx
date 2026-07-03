@@ -11,7 +11,8 @@ export default function Home() {
   const card2Ref = useReveal<HTMLDivElement>(250);
   const card3Ref = useReveal<HTMLDivElement>(400);
   const parallaxRef = useParallax<HTMLDivElement>(0.2);
-  const { ref: statRef, value: statValue } = useCountUp(87);
+  const { ref: statRef, value: statValue } =
+    useCountUp<HTMLParagraphElement>(87);
 
   return (
     <div className="min-h-screen bg-surface-light dark:bg-surface-dark text-ink dark:text-mint transition-colors">
