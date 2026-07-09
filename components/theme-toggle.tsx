@@ -23,13 +23,13 @@ export function ThemeToggle() {
     localStorage.setItem('theme', next ? 'dark' : 'light');
   }
 
-  if (!theme.mounted) return <div className="w-9 h-9" />;
+  if (!theme.mounted) return <div className="w-11 h-11" />;
 
   return (
     <button
       onClick={toggleTheme}
       aria-label={theme.isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="squircle-sm w-9 h-9 flex items-center justify-center bg-forest/20 dark:bg-mint/10 hover:bg-forest/30 dark:hover:bg-mint/20 transition-colors"
+      className="nav-link squircle-sm w-11 h-11 flex items-center justify-center bg-forest/20 dark:bg-mint/10"
     >
       {theme.isDark ? '☀️' : '🌙'}
     </button>
