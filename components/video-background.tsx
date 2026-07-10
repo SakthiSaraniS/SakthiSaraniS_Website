@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-export function VideoBackground() {
+export function VideoBackground({
+  mode = 'scoped',
+}: {
+  mode?: 'scoped' | 'fixed';
+}) {
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -12,8 +16,13 @@ export function VideoBackground() {
     );
   }, []);
 
+  const positionClass = mode === 'fixed' ? 'fixed' : 'absolute';
+
   return (
-    <div aria-hidden="true" className="absolute inset-0 z-0 overflow-hidden">
+    <div
+      aria-hidden="true"
+      className={`${positionClass} inset-0 ${mode === 'scoped' ? 'z-0' : '-z-10'} overflow-hidden`}
+    >
       {!reducedMotion && (
         <video
           className="h-full w-full object-cover"
@@ -27,7 +36,9 @@ export function VideoBackground() {
         </video>
       )}
       <div className="absolute inset-0 z-[1] bg-surface-light/40 dark:bg-ink/60" />
-      <div className="absolute inset-x-0 bottom-0 z-[2] h-1/4 bg-gradient-to-b from-transparent to-surface-light dark:to-surface-dark" />
+      {mode === 'scoped' && (
+        <div className="absolute inset-x-0 bottom-0 z-[2] h-1/4 bg-gradient-to-b from-transparent to-surface-light dark:to-surface-dark" />
+      )}
     </div>
   );
 }

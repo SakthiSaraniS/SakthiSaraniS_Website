@@ -46,8 +46,8 @@ function tooltipOffset(index: number, arcT: number) {
   const dirX = Math.sin(angleRad);
   const dirY = -Math.cos(angleRad);
 
-  const BASE_LIFT = 30;
-  const RADIAL_PUSH = 30;
+  const BASE_LIFT = 34; // always keeps the tooltip above the icon, regardless of arc angle
+  const RADIAL_PUSH = 30; // extra outward drift as the dock arcs open
 
   const push = RADIAL_PUSH * arcT;
 
@@ -58,6 +58,7 @@ function tooltipOffset(index: number, arcT: number) {
 }
 
 export function Dock() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<Array<HTMLElement | null>>([]);
   const rafId = useRef<number>(0);
   const [progress, setProgress] = useState(0);
@@ -80,7 +81,7 @@ export function Dock() {
 
   useEffect(() => {
     function update() {
-      const section = document.getElementById('resume-contact-section');
+      const section = document.getElementById('nav-expand-anchor');
       if (!section) {
         setProgress(0);
         return;
@@ -115,37 +116,46 @@ export function Dock() {
     return () => cancelAnimationFrame(rafId.current);
   }, []);
 
+  useEffect(() => {
+    function computeHoverScales(mouseX: number | null) {
+      return itemRefs.current.map((el) => {
+        if (!el || mouseX === null) return 0;
+        const rect = el.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const distance = Math.abs(mouseX - center);
+        const t = Math.max(0, 1 - distance / HOVER_FALLOFF);
+        return t * HOVER_BOOST;
+      });
+    }
+
+    function handleWindowMouseMove(e: MouseEvent) {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      cancelAnimationFrame(rafId.current);
+      rafId.current = requestAnimationFrame(() => {
+        setHoverScales(computeHoverScales(inside ? e.clientX : null));
+      });
+    }
+
+    window.addEventListener('mousemove', handleWindowMouseMove, {
+      passive: true,
+    });
+    return () => window.removeEventListener('mousemove', handleWindowMouseMove);
+  }, []);
+
   function toggleTheme() {
     const next = !theme.isDark;
     setTheme({ isDark: next, mounted: true });
     document.documentElement.classList.toggle('dark', next);
     localStorage.setItem('theme', next ? 'dark' : 'light');
-  }
-
-  function computeHoverScales(mouseX: number | null) {
-    return itemRefs.current.map((el) => {
-      if (!el || mouseX === null) return 0;
-      const rect = el.getBoundingClientRect();
-      const center = rect.left + rect.width / 2;
-      const distance = Math.abs(mouseX - center);
-      const t = Math.max(0, 1 - distance / HOVER_FALLOFF);
-      return t * HOVER_BOOST;
-    });
-  }
-
-  function handleMouseMove(e: React.MouseEvent) {
-    const mouseX = e.clientX;
-    cancelAnimationFrame(rafId.current);
-    rafId.current = requestAnimationFrame(() =>
-      setHoverScales(computeHoverScales(mouseX))
-    );
-  }
-
-  function handleMouseLeave() {
-    cancelAnimationFrame(rafId.current);
-    rafId.current = requestAnimationFrame(() =>
-      setHoverScales(computeHoverScales(null))
-    );
   }
 
   const scaleT = clamp01(progress * 1.3);
@@ -166,19 +176,19 @@ export function Dock() {
 
   return (
     <div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={`fixed bottom-6 left-1/2 z-50 -translate-x-1/2 ${isExpanded ? 'dock-expanded' : ''}`}
+      ref={containerRef}
+      className={`pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 ${isExpanded ? 'dock-expanded' : ''}`}
       style={{ width: LINE_SPACING * ITEM_COUNT, height: RADIUS + ITEM_SIZE }}
     >
       <div
-        className="squircle-lg absolute inset-x-0 bottom-0 border border-forest/10 bg-surface-light/70 backdrop-blur-md dark:border-mint/10 dark:bg-surface-dark/70"
+        className="squircle-lg pointer-events-auto absolute inset-x-0 bottom-0 border border-forest/10 bg-surface-light/70 backdrop-blur-md dark:border-mint/10 dark:bg-surface-dark/70"
         style={{ height: ITEM_SIZE + 24, opacity: pillOpacity }}
       />
 
       {allItems.map((item, i) => {
         const { x, y } = itemPosition(i, arcT);
         const scale = baseScale + (hoverScales[i] ?? 0);
+        const tip = tooltipOffset(i, arcT);
 
         const iconContent =
           item.kind === 'link' ? (
@@ -198,13 +208,13 @@ export function Dock() {
         return (
           <div
             key={item.label}
-            className="group/item absolute"
+            className="group/item pointer-events-auto absolute"
             style={commonStyle}
           >
             <span
               className="pointer-events-none absolute left-1/2 top-1/2 z-30 whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover/item:opacity-100"
               style={{
-                transform: `translate(calc(-50% + ${tooltipOffset(i, arcT).tx}px), calc(-50% + ${tooltipOffset(i, arcT).ty}px))`,
+                transform: `translate(calc(-50% + ${tip.tx}px), calc(-50% + ${tip.ty}px))`,
               }}
             >
               <span className="squircle-sm border border-forest/10 bg-surface-light/90 px-3 py-1.5 text-xs font-medium text-ink backdrop-blur-md dark:border-mint/10 dark:bg-surface-dark/90 dark:text-mint">
