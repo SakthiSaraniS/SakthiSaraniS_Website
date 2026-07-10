@@ -5,8 +5,8 @@ import { Mail } from 'lucide-react';
 import { Container } from '@/components/container';
 import { Squircle } from '@/components/squircle';
 import { Modal } from '@/components/modal';
-import { VideoBackground } from '@/components/video-background';
 import { useReveal } from '@/lib/hooks/use-reveal';
+import { VideoBackground } from '@/components/video-background';
 import { useParallax } from '@/lib/hooks/use-parallax';
 import { useScrollScale } from '@/lib/hooks/use-scroll-scale';
 
@@ -45,7 +45,6 @@ export default function Home() {
     <>
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
         <VideoBackground />
-
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden"
@@ -68,10 +67,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="resume-contact-section"
-        className="px-6 pb-40 pt-32 sm:pt-40"
-      >
+      <section id="nav-expand-anchor" className="px-6 pb-40 pt-32 sm:pt-40">
         <Container className="grid gap-16 md:grid-cols-2">
           <Squircle
             ref={resumeRef}

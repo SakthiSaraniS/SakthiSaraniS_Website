@@ -161,4 +161,343 @@ body {
   .dock-expanded .dock-icon:hover .dock-icon-svg {
     animation: none;
   }
+  .wheel-row {
+    transition: none;
+  }
+}
+
+.domain-accordion {
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 480px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.domain-panel {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  corner-shape: superellipse(1.5);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--color-moss) 35%, transparent),
+    color-mix(in srgb, var(--color-forest) 45%, transparent)
+  );
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--color-mint) 20%, transparent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  transition: flex 0.5s var(--ease-lag);
+}
+
+.domain-panel:hover,
+.domain-panel:focus-visible {
+  flex: 4;
+}
+
+.dark .domain-panel {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--color-forest) 60%, transparent),
+    color-mix(in srgb, var(--color-ink) 75%, transparent)
+  );
+}
+
+.domain-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--color-mint) 8%, transparent);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-lag);
+  pointer-events: none;
+}
+
+.domain-panel:hover::before,
+.domain-panel:focus-visible::before {
+  opacity: 1;
+}
+
+.domain-panel-label {
+  display: block;
+  color: var(--color-surface-light);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
+}
+
+.domain-panel-meta {
+  display: block;
+  color: var(--color-mint);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-align: center;
+  margin-top: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-lag);
+  position: relative;
+  z-index: 1;
+}
+
+.domain-panel:hover .domain-panel-meta,
+.domain-panel:focus-visible .domain-panel-meta {
+  opacity: 1;
+}
+
+.flip-card {
+  perspective: 1200px;
+  height: 400px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 2.4s var(--ease-lag);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--color-ink) 25%, transparent);
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card:focus-within .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: color-mix(
+    in srgb,
+    var(--color-moss) 50%,
+    var(--color-surface-light)
+  );
+}
+
+.dark .flip-face {
+  background: color-mix(
+    in srgb,
+    var(--color-moss) 30%,
+    var(--color-surface-dark)
+  );
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+.flip-front-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.1rem;
+  color: var(--color-surface-light);
+}
+
+.flip-logo-zone {
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-badge {
+  background: color-mix(in srgb, var(--color-ink) 45%, transparent);
+  backdrop-filter: blur(4px);
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  width: fit-content;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.flip-title-zone {
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0 0.25rem;
+}
+
+.flip-title-centered {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-align: center;
+  margin: 0;
+}
+
+.flip-desc-box {
+  height: 40%;
+  overflow-y: auto;
+  background: color-mix(in srgb, var(--color-ink) 55%, transparent);
+  backdrop-filter: blur(6px);
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--color-surface-light) 85%, transparent);
+}
+
+html {
+  font-size: 80%;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.flip-desc-justify {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.flip-border-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.flip-border-ring::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    var(--color-forest),
+    var(--color-ink),
+    transparent 60%
+  );
+  filter: drop-shadow(
+    0 0 6px color-mix(in srgb, var(--color-forest) 70%, transparent)
+  );
+  animation: flip-spin 5s linear infinite;
+}
+
+.dark .flip-border-ring::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    var(--color-mint),
+    var(--color-moss),
+    transparent 60%
+  );
+  filter: drop-shadow(
+      0 0 12px color-mix(in srgb, var(--color-mint) 85%, transparent)
+    )
+    drop-shadow(0 0 24px color-mix(in srgb, var(--color-mint) 45%, transparent));
+}
+
+.flip-border-ring::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: inherit;
+  background: color-mix(
+    in srgb,
+    var(--color-moss) 50%,
+    var(--color-surface-light)
+  );
+}
+
+.dark .flip-border-ring::after {
+  background: color-mix(
+    in srgb,
+    var(--color-moss) 30%,
+    var(--color-surface-dark)
+  );
+}
+
+@keyframes flip-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.flip-back-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.1rem;
+  text-align: center;
+  color: var(--color-surface-light);
+}
+
+.flip-stack-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-mint);
+  font-weight: 700;
+}
+
+.flip-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.flip-tag {
+  background: color-mix(in srgb, var(--color-mint) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-mint) 30%, transparent);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.wheel-stage {
+  position: relative;
+  height: 620px;
+  perspective: 900px;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+}
+
+.wheel-row {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  transform-style: preserve-3d;
+  will-change: transform, filter, opacity;
+}
+
+.wheel-card {
+  width: 320px;
 }

@@ -1,3 +1,4 @@
+// content/projects.ts
 import type { Project } from '@/lib/types';
 
 export const projects: Project[] = [
@@ -31,7 +32,7 @@ export const projects: Project[] = [
         'LLM inference platforms like Bedrock cache prompts internally, but developers have no visibility into cache eligibility or cost implications until after the fact.',
       role: 'Designed and built the full system solo — backend architecture, the custom Segment Forest algorithm, and API design.',
       challenges:
-        "Reverse-engineering cache eligibility rules from observable behavior rather than documented specs; building a tree-based algorithm that reasons about prompt segmentation without executing untrusted code (solved via Python's ast module for safe static analysis).",
+        'Reverse-engineering cache eligibility rules from observable behavior rather than documented specs; building a tree-based algorithm that reasons about prompt segmentation without executing untrusted code.',
       results: '',
     },
     images: [],
@@ -107,10 +108,39 @@ export const projects: Project[] = [
     links: {},
   },
   {
-    slug: 'waste-management-system',
-    title: 'Waste Management System',
+    slug: 'portfolio-website',
+    title: 'Portfolio Website',
     shortDescription:
-      'A full-stack relational database system automating campus waste collection scheduling with a normalized 13-table schema.',
+      'This site itself — built with a focus on performance, accessibility, and production-grade engineering practices.',
+    logo: '/logos/portfolio-website.svg',
+    domainTags: ['Software Engineering / Full-Stack'],
+    skillTags: ['JavaScript / TypeScript'],
+    fullToolList: [
+      'Next.js (App Router)',
+      'TypeScript',
+      'Tailwind CSS v4',
+      'Lenis smooth scroll',
+      'IntersectionObserver-based motion hooks',
+      'Husky + lint-staged',
+      'ESLint + Prettier',
+      'Vercel CI/CD with automatic PR previews',
+    ],
+    body: {
+      problem:
+        'Most portfolio sites default to a generic template look and skip the engineering practices that would actually demonstrate skill to a technical reviewer.',
+      role: 'Designed and built the entire site solo, including the design system, motion utilities, and CI/CD pipeline.',
+      challenges:
+        'Adapting reference design techniques into idiomatic React/Next.js patterns rather than porting raw DOM-manipulation code directly.',
+      results: '',
+    },
+    images: [],
+    links: { github: 'https://github.com/SakthiSaraniS/SakthiSaraniS_Website' },
+  },
+  {
+    slug: 'waste-management-system',
+    title: 'Relational Database System for Waste Collection Logistics',
+    shortDescription:
+      'A normalized 13-table RBAC database system automating campus waste collection scheduling, built from formal ER modeling.',
     logo: '/logos/waste-management.svg',
     domainTags: ['Data Engineering', 'Software Engineering / Full-Stack'],
     skillTags: ['SQL / Databases', 'Python'],
@@ -178,7 +208,7 @@ export const projects: Project[] = [
         'Amputees need real-time terrain awareness and fall detection, but most prosthetic sensor systems either block on delay()-based timing or lack multi-sensor fusion.',
       role: 'Designed and built the full embedded system solo — firmware, sensor fusion, and power electronics.',
       challenges:
-        'Managing simultaneous I2C, ADC, and GPIO sensor reads on a single MCU without blocking, and safely bridging mixed-voltage components (3.3V logic vs 5V sensors).',
+        'Managing simultaneous I2C, ADC, and GPIO sensor reads on a single MCU without blocking, and safely bridging mixed-voltage components.',
       skillBreakdown: {
         high: [
           'Multi-sensor fusion via I2C + ADC + GPIO on a single MCU',
@@ -208,7 +238,6 @@ export const projects: Project[] = [
       'A blockchain-backed DNS architecture providing tamper-evident domain–IP mappings and verifiable name resolution.',
     logo: '/logos/secure-dns.svg',
     domainTags: ['Cybersecurity'],
-    // TODO: confirm actual implementation language before finalizing this tag
     skillTags: ['Python'],
     fullToolList: [
       'API-key authentication',
@@ -221,39 +250,10 @@ export const projects: Project[] = [
         'Standard DNS has no built-in integrity guarantee — responses can be spoofed or tampered with in transit.',
       role: 'Designed and implemented the full system solo.',
       challenges:
-        'Building reliable cross-platform (Linux/Windows) secure communication over UDP, which is connectionless by design and required custom integrity/auth handling at the application layer.',
+        'Building reliable cross-platform (Linux/Windows) secure communication over UDP, which is connectionless by design.',
       results: '',
     },
     images: [],
     links: {},
-  },
-  {
-    slug: 'this-website',
-    title: 'This Website',
-    shortDescription:
-      'The portfolio site itself — built with a focus on performance, accessibility, and production-grade engineering practices.',
-    logo: '/logos/this-website.svg',
-    domainTags: ['Software Engineering / Full-Stack'],
-    skillTags: ['JavaScript / TypeScript'],
-    fullToolList: [
-      'Next.js (App Router)',
-      'TypeScript',
-      'Tailwind CSS v4',
-      'Lenis smooth scroll',
-      'IntersectionObserver-based motion hooks',
-      'Husky + lint-staged',
-      'ESLint + Prettier',
-      'Vercel CI/CD with automatic PR previews',
-    ],
-    body: {
-      problem:
-        'Most portfolio sites default to a generic template look and skip the engineering practices that would actually demonstrate skill to a technical reviewer.',
-      role: 'Designed and built the entire site solo, including the design system, motion utilities, and CI/CD pipeline.',
-      challenges:
-        "Adapting a reference design's techniques (Lenis internals, element-relative parallax math, IntersectionObserver-based reveal) into idiomatic React/Next.js patterns rather than porting raw DOM-manipulation code directly.",
-      results: '',
-    },
-    images: [],
-    links: { github: 'https://github.com/SakthiSaraniS/SakthiSaraniS_Website' },
   },
 ];
