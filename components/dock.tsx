@@ -192,9 +192,15 @@ export function Dock() {
 
         const iconContent =
           item.kind === 'link' ? (
-            <item.Icon className="dock-icon-svg h-6 w-6" aria-hidden="true" />
+            <item.Icon
+              className="dock-icon-svg h-[19px] w-[19px]"
+              aria-hidden="true"
+            />
           ) : (
-            <ThemeIcon className="dock-icon-svg h-6 w-6" aria-hidden="true" />
+            <ThemeIcon
+              className="dock-icon-svg h-[19px] w-[19px]"
+              aria-hidden="true"
+            />
           );
 
         const commonStyle: React.CSSProperties = {
