@@ -350,7 +350,7 @@ body {
 }
 
 .flip-desc-box {
-  flex: 1;
+  height: 40%;
   overflow-y: auto;
   background: color-mix(in srgb, var(--color-ink) 55%, transparent);
   backdrop-filter: blur(6px);
@@ -359,6 +359,14 @@ body {
   font-size: 0.95rem;
   line-height: 1.5;
   color: color-mix(in srgb, var(--color-surface-light) 85%, transparent);
+}
+
+html {
+  font-size: 75%;
+}
+
+body {
+  font-family: var(--font-sans);
 }
 
 .flip-desc-justify {
